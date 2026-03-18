@@ -884,6 +884,382 @@
             }
         }
 
+        /* ===== REVIEWS ===== */
+        .reviews {
+            background: var(--bg-primary);
+            overflow: hidden;
+        }
+
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .reviews-header .section-divider {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .reviews-track-wrap {
+            position: relative;
+        }
+
+        .reviews-track-wrap::before,
+        .reviews-track-wrap::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 80px;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .reviews-track-wrap::before {
+            left: 0;
+            background: linear-gradient(to right, var(--bg-primary), transparent);
+        }
+
+        .reviews-track-wrap::after {
+            right: 0;
+            background: linear-gradient(to left, var(--bg-primary), transparent);
+        }
+
+        .reviews-track {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding: 0.5rem calc(50% - 170px) 1.5rem;
+        }
+
+        .reviews-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .review-card {
+            flex: 0 0 340px;
+            scroll-snap-align: center;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .review-card:hover {
+            border-color: rgba(201, 169, 110, 0.25);
+        }
+
+        .review-top {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .review-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+
+        .review-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .review-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .review-stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .review-stars svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .review-text {
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .reviews-summary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .reviews-summary-stars {
+            display: flex;
+            gap: 3px;
+        }
+
+        .reviews-summary-stars svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .reviews-summary-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .reviews-summary-text strong {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .reviews-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .reviews-footer {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+
+        .review-leave-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.85rem 2rem;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .review-leave-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .review-leave-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Review modal */
+        .review-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s;
+            padding: 1rem;
+        }
+
+        .review-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .review-modal-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            max-width: 460px;
+            width: 100%;
+            transform: translateY(20px);
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .review-modal.active .review-modal-box {
+            transform: translateY(0);
+        }
+
+        .review-modal-title {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .review-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+            line-height: 1;
+        }
+
+        .review-modal-close:hover {
+            color: var(--gold);
+        }
+
+        .review-modal-box .review-modal-close {
+            position: static;
+            float: right;
+        }
+
+        .review-form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .review-form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .review-form-group input,
+        .review-form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            transition: border-color 0.3s;
+            outline: none;
+        }
+
+        .review-form-group input:focus,
+        .review-form-group textarea:focus {
+            border-color: var(--gold);
+        }
+
+        .review-form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .review-stars-input {
+            display: flex;
+            gap: 6px;
+        }
+
+        .review-stars-input svg {
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            fill: var(--border);
+            transition: fill 0.2s, transform 0.2s;
+        }
+
+        .review-stars-input svg:hover {
+            transform: scale(1.15);
+        }
+
+        .review-stars-input svg.lit {
+            fill: var(--gold);
+        }
+
+        .review-submit {
+            width: 100%;
+            padding: 0.9rem;
+            background: var(--gold);
+            border: none;
+            color: var(--bg-primary);
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 0.5rem;
+        }
+
+        .review-submit:hover {
+            background: var(--gold-light);
+        }
+
+        .review-success {
+            text-align: center;
+            padding: 2rem 0;
+            display: none;
+        }
+
+        .review-success.show {
+            display: block;
+        }
+
+        .review-success svg {
+            width: 48px;
+            height: 48px;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .review-success p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .reviews-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .reviews-dot.active {
+            background: var(--gold);
+            transform: scale(1.3);
+        }
+
+        @media (max-width: 550px) {
+            .review-card {
+                flex: 0 0 290px;
+            }
+
+            .reviews-track {
+                padding: 0.5rem calc(50% - 145px) 1.5rem;
+            }
+        }
+
         /* ===== COPY ADDRESS ===== */
         .address-copy {
             position: relative;
@@ -1096,6 +1472,7 @@
             <li><a href="#about">О мастере</a></li>
             <li><a href="#services">Услуги</a></li>
             <li><a href="#gallery">Работы</a></li>
+            <li><a href="#reviews">Отзывы</a></li>
             <li><a href="#location">Где найти</a></li>
             <li><a href="#contact">Записаться</a></li>
         </ul>
@@ -1111,6 +1488,7 @@
         <a href="#about" onclick="closeMobile()">О мастере</a>
         <a href="#services" onclick="closeMobile()">Услуги</a>
         <a href="#gallery" onclick="closeMobile()">Работы</a>
+        <a href="#reviews" onclick="closeMobile()">Отзывы</a>
         <a href="#location" onclick="closeMobile()">Где найти</a>
         <a href="#contact" onclick="closeMobile()">Записаться</a>
     </div>
@@ -1294,6 +1672,131 @@
         <button class="lightbox-nav lightbox-next" onclick="navLightbox(1)">&#8250;</button>
         <img id="lightboxImg" src="" alt="Фото работы">
     </div>
+
+    <!-- Reviews -->
+    <section class="reviews" id="reviews">
+        <div class="container">
+            <div class="reviews-header reveal">
+                <p class="section-label">Отзывы</p>
+                <h2 class="section-title">Что говорят клиенты</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="reviews-summary reveal">
+                <div class="reviews-summary-stars">
+                    <svg viewBox="0 0 14 14" fill="var(--gold)"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg>
+                    <svg viewBox="0 0 14 14" fill="var(--gold)"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg>
+                    <svg viewBox="0 0 14 14" fill="var(--gold)"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg>
+                    <svg viewBox="0 0 14 14" fill="var(--gold)"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg>
+                    <svg viewBox="0 0 14 14" fill="var(--gold)"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg>
+                </div>
+                <span class="reviews-summary-text"><strong>5.0</strong> — 130+ отзывов</span>
+            </div>
+            <div class="reviews-track-wrap reveal">
+                <div class="reviews-track" id="reviewsTrack">
+                    <div class="review-card">
+                        <div class="review-top">
+                            <div class="review-avatar">Р</div>
+                            <div>
+                                <div class="review-name">Розанна</div>
+                                <div class="review-date">23 июня 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars"><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg></div>
+                        <div class="review-text">Очень классная парикмахерская, уютная, чистая. Мастер учитывает все пожелания клиента, стрижка ребенку очень понравилась!!! Цены не кусаются, очень приемлемые. Спасибо Вам большое!!! Желаю Вам процветания и успехов!</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-top">
+                            <div class="review-avatar">К</div>
+                            <div>
+                                <div class="review-name">Константин</div>
+                                <div class="review-date">20 февраля 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars"><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg></div>
+                        <div class="review-text">Постригаюсь только в вашей сети, все мастера хорошо обучены и всегда остаюсь доволен. Но Махди сделал своё дело лучше всех, впредь буду стараться попасть именно к нему!</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-top">
+                            <div class="review-avatar">А</div>
+                            <div>
+                                <div class="review-name">Алексей</div>
+                                <div class="review-date">19 февраля 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars"><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg></div>
+                        <div class="review-text">Хочу выразить огромную благодарность парикмахеру Махди! Каждый визит — это настоящее удовольствие. Профессионализм, внимание к деталям и умение понять мои пожелания делают каждую стрижку уникальной. Махди — настоящий мастер своего дела!</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-top">
+                            <div class="review-avatar">Р</div>
+                            <div>
+                                <div class="review-name">Регина</div>
+                                <div class="review-date">6 февраля 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars"><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg></div>
+                        <div class="review-text">Хороший, добрый мастер! Профессионал своего дела 100%. Стрижем детей не первый раз!</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-top">
+                            <div class="review-avatar">Н</div>
+                            <div>
+                                <div class="review-name">Нияз</div>
+                                <div class="review-date">18 января 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars"><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg></div>
+                        <div class="review-text">Спасибо за стрижку. Прихожу не первый раз, всё очень нравится.</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-top">
+                            <div class="review-avatar">Р</div>
+                            <div>
+                                <div class="review-name">Ринат</div>
+                                <div class="review-date">24 января 2026</div>
+                            </div>
+                        </div>
+                        <div class="review-stars"><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg></div>
+                        <div class="review-text">Хороший мастер! Рекомендую!</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-top">
+                            <div class="review-avatar">Д</div>
+                            <div>
+                                <div class="review-name">Динар</div>
+                                <div class="review-date">11 декабря 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars"><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg></div>
+                        <div class="review-text">Все супер, мастер своего дела!</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-top">
+                            <div class="review-avatar">Д</div>
+                            <div>
+                                <div class="review-name">Денис</div>
+                                <div class="review-date">4 октября 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars"><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg></div>
+                        <div class="review-text">Мастер своего дела, спасибо.</div>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-top">
+                            <div class="review-avatar">Р</div>
+                            <div>
+                                <div class="review-name">Роман</div>
+                                <div class="review-date">17 июня 2025</div>
+                            </div>
+                        </div>
+                        <div class="review-stars"><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg><svg viewBox="0 0 14 14" fill="var(--gold)" xmlns="http://www.w3.org/2000/svg"><path d="M7 1l1.76 3.57 3.94.57-2.85 2.78.67 3.93L7 10.27l-3.52 1.58.67-3.93L1.3 5.14l3.94-.57z"/></svg></div>
+                        <div class="review-text">Рекомендую! Всё понравилось!</div>
+                    </div>
+                </div>
+            </div>
+            <div class="reviews-dots" id="reviewsDots"></div>
+        </div>
+    </section>
 
     <!-- Location -->
     <section class="location" id="location">
@@ -1483,6 +1986,32 @@
             if (e.key === 'ArrowLeft') navLightbox(-1);
             if (e.key === 'ArrowRight') navLightbox(1);
         });
+        // === Reviews dots ===
+        const track = document.getElementById('reviewsTrack');
+        const dotsWrap = document.getElementById('reviewsDots');
+        const cards = track.querySelectorAll('.review-card');
+        cards.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'reviews-dot' + (i === 0 ? ' active' : '');
+            dot.addEventListener('click', () => {
+                cards[i].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+            });
+            dotsWrap.appendChild(dot);
+        });
+        track.addEventListener('scroll', () => {
+            const center = track.scrollLeft + track.offsetWidth / 2;
+            let active = 0;
+            let minDist = Infinity;
+            cards.forEach((card, i) => {
+                const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+                const dist = Math.abs(center - cardCenter);
+                if (dist < minDist) { minDist = dist; active = i; }
+            });
+            dotsWrap.querySelectorAll('.reviews-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === active);
+            });
+        });
+
         // === Copy address ===
         function copyAddress(e) {
             e.preventDefault();
